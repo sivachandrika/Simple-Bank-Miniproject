@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    tools {
+        maven 'mvn3'
+        jdk 'jdk17
+    }
 
     environment {
         IMAGE_NAME = 'bank-app'
@@ -26,7 +30,7 @@ pipeline {
         }
         stage('Push to Docker Hub') {
             steps {
-               withDockerRegistry(credentialsId: 'docker-creds') {
+               withDockerRegistry(credentialsId: 'docker-creds', toolName: 'docker') {
                     sh 'docker push $DOCKER_HUB_USER/$IMAGE_NAME:$IMAGE_TAG'
                 }
             }
