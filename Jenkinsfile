@@ -1,9 +1,5 @@
 pipeline {
     agent any
-    tools {
-        maven 'mvn3'
-        jdk 'jdk17
-    }
 
     environment {
         IMAGE_NAME = 'bank-app'
@@ -17,6 +13,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/sivachandrika/Simple-Bank-Miniproject.git'
             }
         }
+        
         stage('Build Application') {
             steps {
                 sh 'mvn clean package'
@@ -28,16 +25,18 @@ pipeline {
                 sh 'docker build -t $DOCKER_HUB_USER/$IMAGE_NAME:$IMAGE_TAG .'
             }
         }
+        
         stage('Push to Docker Hub') {
             steps {
-               withDockerRegistry(credentialsId: 'docker-creds', toolName: 'docker') {
+                withDockerRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
                     sh 'docker push $DOCKER_HUB_USER/$IMAGE_NAME:$IMAGE_TAG'
                 }
             }
         }
+        
         stage('Deploy Container') {
             steps {
-                sh 'docker run -d --name bank-app -p 8081:8081 $DOCKER_HUB_USER/$IMAGE_NAME:$IMAGE_TAG'
+                sh 'docker run -d --name bank-app -p 8080:8080 $DOCKER_HUB_USER/$IMAGE_NAME:$IMAGE_TAG'
             }
         }
     }
