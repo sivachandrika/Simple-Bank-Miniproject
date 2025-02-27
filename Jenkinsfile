@@ -17,6 +17,7 @@ pipeline {
         stage('Build Application') {
             steps {
                 sh 'mvn clean package'
+                sh 'ls -l target/'  // Debugging: Ensure JAR file exists
             }
         }
         
@@ -38,7 +39,10 @@ pipeline {
             steps {
                 sh 'docker ps -q | xargs -r docker stop'
                 sh 'docker ps -aq | xargs -r docker rm'
-                sh 'docker run -d --name bank-app -p 3000:3000 $DOCKER_HUB_USER/$IMAGE_NAME:$IMAGE_TAG'
+                sh 'docker run -d --name bank-app -p 8080:8080 $DOCKER_HUB_USER/$IMAGE_NAME:$IMAGE_TAG'
+                
+                // Wait for container to start and check logs
+                sh 'sleep 5 && docker logs bank-app'
             }
         }
     }
