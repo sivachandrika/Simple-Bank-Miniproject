@@ -36,7 +36,7 @@ pipeline {
         
         stage('Deploy Container') {
             steps {
-                sh 'docker run -d --name bank-app -p 8080:8080 $DOCKER_HUB_USER/$IMAGE_NAME:$IMAGE_TAG'
+                sh 'docker run -d --name bank-app -p 8081:8081 $DOCKER_HUB_USER/$IMAGE_NAME:$IMAGE_TAG'
             }
         }
     }
