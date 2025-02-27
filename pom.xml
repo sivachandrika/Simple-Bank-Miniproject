@@ -35,6 +35,20 @@
                 </configuration>
             </plugin>
 
+            <!-- Jar Plugin to set Main-Class in manifest -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.2.0</version>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <mainClass>miniproject.Main</mainClass>
+                    </manifest>
+                </archive>
+            </configuration>
+        </plugin>
+
             <!-- Exec Maven Plugin for Running the Application -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -47,4 +61,3 @@
         </plugins>
     </build>
 </project>
-
