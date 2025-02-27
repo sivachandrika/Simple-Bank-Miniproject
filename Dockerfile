@@ -8,7 +8,7 @@ WORKDIR /app
 COPY target/bank-app-1.0-SNAPSHOT.jar bank-app.jar
 
 # Expose port 8080 (Spring Boot's default port)
-EXPOSE 8080
+EXPOSE 9090
 
 # Command to run the application
 CMD ["java", "-jar", "/app/bank-app.jar"]
