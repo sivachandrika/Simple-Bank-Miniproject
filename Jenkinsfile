@@ -36,6 +36,8 @@ pipeline {
         
         stage('Deploy Container') {
             steps {
+                sh 'docker ps -q | xargs -r docker stop'
+                sh 'docker ps -aq | xargs -r docker rm'
                 sh 'docker run -d --name bank-app -p 8081:8081 $DOCKER_HUB_USER/$IMAGE_NAME:$IMAGE_TAG'
             }
         }
