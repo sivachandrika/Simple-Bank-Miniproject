@@ -38,7 +38,7 @@ pipeline {
             steps {
             sh 'docker ps -q --filter "name=bank-app" | xargs -r docker stop'
             sh 'docker ps -aq --filter "name=bank-app" | xargs -r docker rm'
-            sh 'docker run -d --name bank-app -p 8080:8080 $DOCKER_HUB_USER/$IMAGE_NAME:$IMAGE_TAG'
+            sh 'docker run -d --name bank-app -p 9090:8080 $DOCKER_HUB_USER/$IMAGE_NAME:$IMAGE_TAG'
             }
         }
     }
